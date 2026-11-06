@@ -86,10 +86,19 @@ Feliz aniversário, minha mulher, meu amor. Hoje, meu desejo mais profundo é qu
   const audio = document.querySelector('#background-music'), button = document.querySelector('#music-toggle'), message = document.querySelector('#music-message');
   button.onclick = async () => {
     if (!audio.getAttribute('src')) { message.textContent = 'Nenhuma música foi adicionada à homenagem.'; return; }
-    try { if (audio.paused) await audio.pause(); else audio.play(); message.textContent = ''; }
+    try { if (audio.paused) await audio.play(); else audio.pause(); message.textContent = ''; }
     catch { message.textContent = 'Não foi possível tocar a música. Abra o arquivo em outro navegador ou tente novamente.'; }
   };
   function update() { button.textContent = audio.paused ? '♫ Tocar nossa música' : '♫ Pausar música'; button.setAttribute('aria-pressed',String(!audio.paused)); }
   audio.addEventListener('play',update); audio.addEventListener('pause',update);
   audio.addEventListener('error',() => { message.textContent = 'Não foi possível carregar esta música neste navegador.'; update(); });
+
+  if (audio.getAttribute('src')) {
+  audio.volume = 0.35;
+
+  audio.play().catch(() => {
+    message.textContent = 'Toque em “Tocar nossa música” para ouvir ♡';
+    });
+  }
+
 })();</script></body></html>
